@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
 
 // Configuramos la fuente
@@ -52,15 +53,14 @@ export default function Hero() {
           </p>
 
           {/* Botón */}
-          <a
-            href="#catalogo"
+          <Link
+            href="/catalogo"
             className="mt-4 inline-flex items-center gap-5 bg-white px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-gray-200 sm:px-6 sm:py-3 sm:text-sm md:mt-6"
           >
             COMPRAR AHORA
 
-            {/* Flecha */}
             <span className="text-lg">→</span>
-          </a>
+          </Link>
 
         </div>
 

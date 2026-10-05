@@ -1,6 +1,7 @@
 import ProductCard from "./ProductCard";
 import { products } from "../data/products";
 import { Bebas_Neue } from "next/font/google";
+import Link from "next/link";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -29,12 +30,12 @@ export default function NewCollection() {
         </h2>
         </div>
 
-        <button
-          type="button"
+        <Link
+          href="/catalogo"
           className="hidden text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:text-yellow-400 sm:block"
         >
           Ver todos →
-        </button>
+        </Link>
       </div>
 
       {/* Productos */}
@@ -46,12 +47,12 @@ export default function NewCollection() {
 
       {/* Botón móvil */}
       <div className="mt-6 text-center sm:hidden">
-        <button
-          type="button"
-          className="text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:text-yellow-400"
-        >
-          Ver todos →
-        </button>
+        <Link
+        href="/catalogo"
+        className="text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:text-yellow-400"
+      >
+        Ver todos →
+      </Link>
       </div>
     </section>
   );
