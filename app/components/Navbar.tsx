@@ -1,10 +1,5 @@
 import { Bebas_Neue } from "next/font/google";
-import {
-  Search,
-  User,
-  ShoppingBag,
-  Menu,
-} from "lucide-react";
+import { Menu } from "lucide-react";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -23,15 +18,11 @@ export default function Navbar() {
     },
     {
       name: "Colecciones",
-      href: "#",
-    },
-    {
-      name: "Accesorios",
-      href: "#",
+      href: "/catalogo",
     },
     {
       name: "Contacto",
-      href: "#",
+      href: "/contacto",
     },
   ];
 
@@ -54,6 +45,8 @@ export default function Navbar() {
           className="flex shrink-0 items-center"
         >
 
+          {/* LOGO */}
+
           <img
             src="/logo.png"
             alt="Logo de DistritoCaps"
@@ -68,17 +61,21 @@ export default function Navbar() {
             "
           />
 
+
+          {/* NOMBRE */}
+
           <span
             className={`
               ${bebas.className}
               ml-2
-              hidden
+              block
+              whitespace-nowrap
               text-2xl
               tracking-wide
-              sm:block
               md:text-3xl
             `}
           >
+
             <span className="text-white">
               DISTRITO
             </span>
@@ -86,6 +83,7 @@ export default function Navbar() {
             <span className="text-yellow-400">
               CAPS
             </span>
+
           </span>
 
         </a>
@@ -141,100 +139,12 @@ export default function Navbar() {
 
 
         {/* ================================================
-            ICONOS
+            MENÚ MÓVIL
         ================================================= */}
 
-        <div className="ml-auto flex items-center gap-1 sm:gap-2 md:gap-4">
+        <div className="ml-auto md:hidden">
 
-          {/* BÚSQUEDA */}
-
-          <button
-            type="button"
-            aria-label="Buscar"
-            className="
-              flex
-              h-10
-              w-10
-              items-center
-              justify-center
-              transition
-              hover:text-yellow-400
-            "
-          >
-            <Search className="h-5 w-5" />
-          </button>
-
-
-          {/* USUARIO */}
-
-          <button
-            type="button"
-            aria-label="Mi cuenta"
-            className="
-              flex
-              h-10
-              w-10
-              items-center
-              justify-center
-              transition
-              hover:text-yellow-400
-            "
-          >
-            <User className="h-5 w-5" />
-          </button>
-
-
-          {/* CARRITO */}
-
-          <button
-            type="button"
-            aria-label="Carrito"
-            className="
-              relative
-              flex
-              h-10
-              w-10
-              items-center
-              justify-center
-              transition
-              hover:text-yellow-400
-            "
-          >
-
-            <ShoppingBag className="h-5 w-5" />
-
-            {/* BURBUJA */}
-
-            <span
-              className="
-                absolute
-                right-0
-                top-0
-                flex
-                h-4
-                min-w-4
-                items-center
-                justify-center
-                rounded-full
-                bg-yellow-400
-                px-1
-                text-[9px]
-                font-bold
-                leading-none
-                text-black
-              "
-            >
-              0
-            </span>
-
-          </button>
-
-
-          {/* ================================================
-              MENÚ MÓVIL
-          ================================================= */}
-
-          <details className="relative md:hidden">
+          <details className="relative">
 
             {/* BOTÓN HAMBURGUESA */}
 
@@ -247,6 +157,8 @@ export default function Navbar() {
                 list-none
                 items-center
                 justify-center
+                transition-colors
+                hover:text-yellow-400
               "
               aria-label="Abrir menú"
             >
@@ -290,7 +202,9 @@ export default function Navbar() {
                       last:border-b-0
                     "
                   >
+
                     {item.name}
+
                   </a>
                 ))}
 
