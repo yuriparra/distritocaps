@@ -1,5 +1,5 @@
 import { Bebas_Neue } from "next/font/google";
-import { Menu } from "lucide-react";
+import { Menu, User } from "lucide-react";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -137,6 +137,31 @@ export default function Navbar() {
 
         </div>
 
+                {/* ================================================
+            ACCESO ADMINISTRADOR - ESCRITORIO
+        ================================================= */}
+
+        <a
+          href="/admin"
+          aria-label="Acceso administrador"
+          title="Acceso administrador"
+          className="
+            ml-auto
+            hidden
+            h-10
+            w-10
+            items-center
+            justify-center
+            text-white
+            transition-colors
+            duration-200
+            hover:text-yellow-400
+            md:flex
+          "
+        >
+          <User className="h-5 w-5" />
+        </a>
+
 
         {/* ================================================
             MENÚ MÓVIL
@@ -187,28 +212,45 @@ export default function Navbar() {
 
               <div className="flex flex-col px-6 py-3">
 
-                {menu.map((item) => (
-                  <a
-                    href={item.href}
-                    key={item.name}
-                    className="
-                      border-b
-                      border-white/10
-                      py-4
-                      text-sm
-                      text-white
-                      transition-colors
-                      hover:text-yellow-400
-                      last:border-b-0
-                    "
-                  >
+              {menu.map((item) => (
+                <a
+                  href={item.href}
+                  key={item.name}
+                  className="
+                    border-b
+                    border-white/10
+                    py-4
+                    text-sm
+                    text-white
+                    transition-colors
+                    hover:text-yellow-400
+                    last:border-b-0
+                  "
+                >
+                  {item.name}
+                </a>
+              ))}
 
-                    {item.name}
+              <a
+                href="/admin"
+                className="
+                  flex
+                  items-center
+                  gap-3
+                  border-t
+                  border-white/10
+                  py-4
+                  text-sm
+                  text-white
+                  transition-colors
+                  hover:text-yellow-400
+                "
+              >
+                <User className="h-5 w-5" />
+                <span>Acceso administrador</span>
+              </a>
 
-                  </a>
-                ))}
-
-              </div>
+            </div>
 
             </div>
 
