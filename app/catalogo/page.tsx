@@ -1,26 +1,59 @@
+// ======================================================
+// CATÁLOGO - DISTRITOCAPS
+// ======================================================
+//
+// Esta página obtiene directamente desde Supabase
+// todos los productos registrados en la tienda.
+// ======================================================
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CatalogHero from "../components/CatalogHero";
 import CatalogProductCard from "../components/CatalogProductCard";
-import { products } from "../data/products";
+import { createClient } from "../../utils/supabase/server";
 
-export default function CatalogoPage() {
+// ======================================================
+// PÁGINA DEL CATÁLOGO
+// ======================================================
+
+export default async function CatalogoPage() {
+  // Crear conexión con Supabase desde el servidor.
+  const supabase = await createClient();
+
+  // Obtener todos los productos.
+  // Los más recientes aparecerán primero.
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  // Si ocurre un error, lo mostramos en consola.
+  if (error) {
+    console.error("Error cargando catálogo:", error);
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
 
-      {/* Navbar */}
+      {/* =================================================
+          NAVBAR
+      ================================================= */}
 
       <div className="sticky top-0 z-50">
         <Navbar />
       </div>
 
-      {/* Catálogo */}
+      {/* =================================================
+          CATÁLOGO
+      ================================================= */}
 
       <main>
 
         <CatalogHero />
 
-        {/* Productos */}
+        {/* =================================================
+            PRODUCTOS
+        ================================================= */}
 
         <section className="px-6 pb-12 md:px-10">
 
@@ -28,7 +61,7 @@ export default function CatalogoPage() {
 
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
 
-              {products.map((product) => (
+              {(products ?? []).map((product) => (
                 <CatalogProductCard
                   key={product.id}
                   product={product}
@@ -43,7 +76,9 @@ export default function CatalogoPage() {
 
       </main>
 
-      {/* Footer */}
+      {/* =================================================
+          FOOTER
+      ================================================= */}
 
       <Footer />
 

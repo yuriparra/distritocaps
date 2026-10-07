@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
+// Tipo de producto utilizado por Supabase.
+import type { Product } from "../types/product";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -8,13 +10,7 @@ const bebas = Bebas_Neue({
 });
 
 type CatalogProductCardProps = {
-  product: {
-    id: string;
-    name: string;
-    brand: string;
-    price: number;
-    images: string[];
-  };
+  product: Product;
 };
 
 export default function CatalogProductCard({
@@ -42,13 +38,36 @@ export default function CatalogProductCard({
         {/* Gorra  hover scale para zoom*/}
 
         <Image
-          src={product.images[0]}
+          src={product.image_1}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-contain p-0 scale-100 transition-transform duration-500 group-hover:scale-115 sm:p-3"
         />
 
+        {/* Estado del producto */}
+        {!product.available && (
+          <div
+            className={`
+              ${bebas.className}
+              absolute
+              right-3
+              top-3
+              z-20
+              rounded-md
+              bg-black/80
+              px-3
+              py-1
+              text-xs
+              uppercase
+              tracking-wider
+              text-white
+              backdrop-blur-sm
+            `}
+          >
+            No disponible
+          </div>
+        )}
       </div>
 
     {/* INFORMACIÓN */}

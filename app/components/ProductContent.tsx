@@ -4,6 +4,8 @@ import Image from "next/image";
 import Navbar from "./Navbar";
 import { useRef, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
+// Tipo de producto utilizado por Supabase.
+import type { Product } from "../types/product";
 
 // =====================================================
 // FUENTE
@@ -19,17 +21,7 @@ const bebas = Bebas_Neue({
 // =====================================================
 
 type ProductContentProps = {
-  product: {
-    id: string;
-    name: string;
-    brand: string;
-    price: number;
-    description: string;
-    category: string;
-    stock: number;
-    active: boolean;
-    images: string[];
-  };
+  product: Product;
 };
 
 // =====================================================
@@ -43,7 +35,12 @@ export default function ProductContent({
   // IMÁGENES DEL PRODUCTO
   // =====================================================
 
-  const images = product.images.slice(0, 3);
+  // Las tres imágenes del producto provienen de Supabase.
+const images = [
+  product.image_1,
+  product.image_2,
+  product.image_3,
+];
 
   // =====================================================
   // IMAGEN SELECCIONADA
@@ -580,34 +577,69 @@ export default function ProductContent({
                 BOTÓN COMPRAR POR WHATSAPP
             ===================================================== */}
 
-            <a
-              href={`https://wa.me/573007657164?text=${encodeURIComponent(
-                `Hola, estoy interesado en la gorra ${product.name}. Precio: $${product.price.toLocaleString(
-                  "es-CO"
-                )}. Quisiera más información para realizar la compra.`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`
-                ${bebas.className}
-                mt-8
-                flex
-                w-full
-                items-center
-                justify-center
-                bg-yellow-400
-                px-6
-                py-4
-                text-lg
-                uppercase
-                tracking-wider
-                text-black
-                transition
-                hover:bg-yellow-300
-              `}
-            >
-              Comprar ahora
-            </a>
+           {/* =====================================================
+            DISPONIBILIDAD Y COMPRA
+        ===================================================== */}
+
+        {product.available ? (
+          // =====================================================
+          // PRODUCTO DISPONIBLE
+          // =====================================================
+
+          <a
+            href={`https://wa.me/573007657164?text=${encodeURIComponent(
+              `Hola, estoy interesado en la gorra ${product.name}. Precio: $${product.price.toLocaleString(
+                "es-CO"
+              )}. Quisiera más información para realizar la compra.`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`
+              ${bebas.className}
+              mt-8
+              flex
+              w-full
+              items-center
+              justify-center
+              bg-yellow-400
+              px-6
+              py-4
+              text-lg
+              uppercase
+              tracking-wider
+              text-black
+              transition
+              hover:bg-yellow-300
+            `}
+          >
+            Comprar ahora
+          </a>
+        ) : (
+          // =====================================================
+          // PRODUCTO NO DISPONIBLE
+          // =====================================================
+
+          <div
+            className={`
+              ${bebas.className}
+              mt-8
+              flex
+              w-full
+              cursor-not-allowed
+              items-center
+              justify-center
+              bg-white/10
+              px-6
+              py-4
+              text-lg
+              uppercase
+              tracking-wider
+              text-gray-500
+            `}
+          >
+            No disponible
+          </div>
+        )}
 
           </div>
 

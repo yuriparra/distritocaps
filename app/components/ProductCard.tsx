@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
-import type { Product } from "../data/products";
+// Tipo de producto utilizado por Supabase.
+import type { Product } from "../types/product";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -32,11 +33,36 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Gorra */}
         <Image
-          src={product.images[0]}
+          src={product.image_1}
           alt={product.name}
           fill
           className="relative object-contain p-4 scale-115 transition-transform duration-500 group-hover:scale-[1.1]"
         />
+        
+        {/* Estado del producto */}
+        {!product.available && (
+          <div
+            className={`
+              ${bebas.className}
+              absolute
+              right-3
+              top-3
+              z-20
+              rounded-md
+              bg-black/80
+              px-3
+              py-1
+              text-xs
+              uppercase
+              tracking-wider
+              text-white
+              backdrop-blur-sm
+            `}
+          >
+            No disponible
+          </div>
+        )}
+
       </div>
 
       {/* Información */}
