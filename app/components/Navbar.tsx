@@ -247,7 +247,7 @@ export default function Navbar() {
                 "
               >
                 <User className="h-5 w-5" />
-                <span>Acceso administrador</span>
+                <span>Acceso</span>
               </a>
 
             </div>

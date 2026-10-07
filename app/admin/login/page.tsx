@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import { useState, useTransition } from "react";
+import { login } from "./actions";
 import { Bebas_Neue } from "next/font/google";
 
 const bebasNeue = Bebas_Neue({
@@ -14,31 +13,19 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  const router = useRouter();
-  const supabase = createClient();
+  function handleLogin(formData: FormData) {
+  setError("");
 
-  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  startTransition(async () => {
+    const result = await login(formData);
 
-    setError("");
-    setLoading(true);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError("Correo o contraseña incorrectos.");
-      setLoading(false);
-      return;
+    if (result?.error) {
+      setError(result.error);
     }
-
-    router.push("/admin");
-    router.refresh();
-  }
+  });
+}
 
   return (
     <main
@@ -63,7 +50,7 @@ export default function AdminLoginPage() {
 
         {/* Formulario */}
         <div className="rounded-[22px] border border-white/20 bg-black/65 p-7 shadow-2xl backdrop-blur-md sm:p-12">
-          <form onSubmit={handleLogin} className="space-y-7">
+          <form action={handleLogin} className="space-y-7">
             <div>
               <label
                 htmlFor="email"
@@ -74,6 +61,7 @@ export default function AdminLoginPage() {
 
               <input
                 id="email"
+                name="email"
                 type="email"
                 required
                 autoComplete="email"
@@ -94,6 +82,7 @@ export default function AdminLoginPage() {
 
               <input
                 id="password"
+                name="password"
                 type="password"
                 required
                 autoComplete="current-password"
@@ -112,10 +101,10 @@ export default function AdminLoginPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={isPending}
               className={`${bebasNeue.className} w-full rounded-xl bg-white px-5 py-4 text-2xl tracking-wide text-black transition hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-60`}
             >
-              {loading ? "INGRESANDO..." : "INGRESAR"}
+              {isPending ? "INGRESANDO..." : "INGRESAR"}
             </button>
           </form>
         </div>
